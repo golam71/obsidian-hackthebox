@@ -464,6 +464,8 @@ body {
 
 To push the theme to a new version you must push it with a tag and this repo has a workflow build that automatically makes a new release. Release versions follow [npm semantic versioning guide.](https://docs.npmjs.com/about-semantic-versioning)
 
+The tag must match the `version` in `manifest.json` exactly, **without a `v` prefix** (for example `2.0.9`, not `v2.0.9`). Obsidian's community directory matches the release tag to the manifest version, so a `v`-prefixed tag will not be recognised.
+
 So in simple terms here is what you need to do:
 
 - Make changes to the `theme.css` file
@@ -471,13 +473,15 @@ So in simple terms here is what you need to do:
 - After push the code with the tag
 
 ```bash
-vim manifest.json # increament the version MAJOR.MINOR.PATCH
+vim manifest.json # increment the version MAJOR.MINOR.PATCH
 git add .
 git commit -m ":zap: Commit message" # follow gitmoji convention
 git push
-git tag tag v2.0.9 # must be same as manifest.json version
-git push origin v2.0.9 # same as above
+git tag -a 2.0.9 -m "2.0.9" # must exactly match manifest.json version, no "v" prefix
+git push origin 2.0.9 # same as above
 ```
+
+The workflow publishes the release with `manifest.json` and `theme.css` attached as assets. It also fails if the pushed tag does not match the manifest version.
 
 # TODO
 
